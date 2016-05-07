@@ -40,7 +40,7 @@ namespace King_Market.Controllers
         public ActionResult Create()
         {
             ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Name");
-            ViewBag.SupplierId = new SelectList(db.Suppliers, "SupplierId", "DocumentNumber");
+            ViewBag.SupplierId = new SelectList(db.Suppliers, "SupplierId", "BusinessName");
             return View();
         }
 

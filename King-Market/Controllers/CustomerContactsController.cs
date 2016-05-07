@@ -39,7 +39,7 @@ namespace King_Market.Controllers
         // GET: CustomerContacts/Create
         public ActionResult Create()
         {
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "DocumentNumber");
+            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "FullName");
             ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Name");
             return View();
         }

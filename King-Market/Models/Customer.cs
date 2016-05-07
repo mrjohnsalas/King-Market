@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -50,6 +51,9 @@ namespace King_Market.Models
         [Required(ErrorMessage = "You must enter {0}")]
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
+
+        [NotMapped]
+        public string FullName { get { return string.Format("{0} {1} {2} {3}", BusinessName, LastName, SecondLastName, FirstName); } }
 
         public virtual DocumentType DocumentType { get; set; }
 
