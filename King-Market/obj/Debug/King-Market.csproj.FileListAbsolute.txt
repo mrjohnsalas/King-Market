@@ -64,6 +64,7 @@ D:\John\Desktop\King-Market\King-Market\obj\Debug\King-Market.pdb
 \\vmware-host\Shared Folders\Desktop\King-Market\King-Market\bin\Antlr3.Runtime.dll
 \\vmware-host\Shared Folders\Desktop\King-Market\King-Market\bin\EntityFramework.dll
 \\vmware-host\Shared Folders\Desktop\King-Market\King-Market\bin\EntityFramework.SqlServer.dll
+\\vmware-host\Shared Folders\Desktop\King-Market\King-Market\bin\FoolproofValidation.dll
 \\vmware-host\Shared Folders\Desktop\King-Market\King-Market\bin\Microsoft.AspNet.Identity.Core.dll
 \\vmware-host\Shared Folders\Desktop\King-Market\King-Market\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 \\vmware-host\Shared Folders\Desktop\King-Market\King-Market\bin\Microsoft.AspNet.Identity.Owin.dll

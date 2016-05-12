@@ -70,6 +70,7 @@ D:\John\Desktop\King-Market\King-Market.Tests\obj\Debug\King-Market.Tests.pdb
 \\vmware-host\Shared Folders\Desktop\King-Market\King-Market.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.dll
 \\vmware-host\Shared Folders\Desktop\King-Market\King-Market.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
 \\vmware-host\Shared Folders\Desktop\King-Market\King-Market.Tests\bin\Debug\System.Web.Http.WebHost.dll
+\\vmware-host\Shared Folders\Desktop\King-Market\King-Market.Tests\bin\Debug\FoolproofValidation.dll
 \\vmware-host\Shared Folders\Desktop\King-Market\King-Market.Tests\bin\Debug\System.Net.Http.Formatting.dll
 \\vmware-host\Shared Folders\Desktop\King-Market\King-Market.Tests\bin\Debug\King-Market.pdb
 \\vmware-host\Shared Folders\Desktop\King-Market\King-Market.Tests\bin\Debug\Newtonsoft.Json.xml
