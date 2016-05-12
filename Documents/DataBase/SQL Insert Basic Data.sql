@@ -10,6 +10,9 @@ INSERT [dbo].[DocumentTypes] ([Name], [OnlyForEnterprise], [ClassDocumentTypeId]
 INSERT [dbo].[DocumentTypes] ([Name], [OnlyForEnterprise], [ClassDocumentTypeId]) VALUES (N'Factura', 1, 2)
 INSERT [dbo].[DocumentTypes] ([Name], [OnlyForEnterprise], [ClassDocumentTypeId]) VALUES (N'Boleta', 0, 2)
 INSERT [dbo].[DocumentTypes] ([Name], [OnlyForEnterprise], [ClassDocumentTypeId]) VALUES (N'Guia', 0, 3)
+--EmployeeTypes
+INSERT [dbo].[EmployeeTypes] ([Name]) VALUES (N'Comprador')
+INSERT [dbo].[EmployeeTypes] ([Name]) VALUES (N'Almacenero')
 --ProductTypes
 INSERT [dbo].[ProductTypes] ([Name]) VALUES (N'Celulares')
 INSERT [dbo].[ProductTypes] ([Name]) VALUES (N'Computadoras')

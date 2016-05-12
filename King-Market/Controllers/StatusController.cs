@@ -15,12 +15,14 @@ namespace King_Market.Controllers
         private King_MarketContext db = new King_MarketContext();
 
         // GET: Status
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View(db.Status.ToList());
         }
 
         // GET: Status/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace King_Market.Controllers
         }
 
         // GET: Status/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +49,7 @@ namespace King_Market.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "StatusId,Name")] Status status)
         {
             if (ModelState.IsValid)
@@ -59,6 +63,7 @@ namespace King_Market.Controllers
         }
 
         // GET: Status/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,6 +83,7 @@ namespace King_Market.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "StatusId,Name")] Status status)
         {
             if (ModelState.IsValid)
@@ -90,6 +96,7 @@ namespace King_Market.Controllers
         }
 
         // GET: Status/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -107,6 +114,7 @@ namespace King_Market.Controllers
         // POST: Status/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Status status = db.Status.Find(id);

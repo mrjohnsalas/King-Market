@@ -15,6 +15,7 @@ namespace King_Market.Controllers
         private King_MarketContext db = new King_MarketContext();
 
         // GET: SupplierContacts
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var supplierContacts = db.SupplierContacts.Include(s => s.DocumentType).Include(s => s.Supplier);
@@ -22,6 +23,7 @@ namespace King_Market.Controllers
         }
 
         // GET: SupplierContacts/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +39,7 @@ namespace King_Market.Controllers
         }
 
         // GET: SupplierContacts/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name");
@@ -49,6 +52,7 @@ namespace King_Market.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "SupplierContactId,SupplierId,DocumentTypeId,DocumentNumber,FirstName,LastName,SecondLastName,Email,Phone")] SupplierContact supplierContact)
         {
             if (ModelState.IsValid)
@@ -64,6 +68,7 @@ namespace King_Market.Controllers
         }
 
         // GET: SupplierContacts/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -85,6 +90,7 @@ namespace King_Market.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "SupplierContactId,SupplierId,DocumentTypeId,DocumentNumber,FirstName,LastName,SecondLastName,Email,Phone")] SupplierContact supplierContact)
         {
             if (ModelState.IsValid)
@@ -99,6 +105,7 @@ namespace King_Market.Controllers
         }
 
         // GET: SupplierContacts/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -116,6 +123,7 @@ namespace King_Market.Controllers
         // POST: SupplierContacts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             SupplierContact supplierContact = db.SupplierContacts.Find(id);

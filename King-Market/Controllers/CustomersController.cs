@@ -7,14 +7,18 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using King_Market.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace King_Market.Controllers
 {
     public class CustomersController : Controller
     {
         private King_MarketContext db = new King_MarketContext();
+        private ApplicationDbContext db2 = new ApplicationDbContext();
 
         // GET: Customers
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var customers = db.Customers.Include(c => c.DocumentType);
@@ -22,6 +26,7 @@ namespace King_Market.Controllers
         }
 
         // GET: Customers/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +42,7 @@ namespace King_Market.Controllers
         }
 
         // GET: Customers/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1)), "DocumentTypeId", "Name");
@@ -48,12 +54,29 @@ namespace King_Market.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "CustomerId,DocumentTypeId,DocumentNumber,BusinessName,FirstName,LastName,SecondLastName,Address,Email,Web,Phone")] Customer customer)
         {
             if (ModelState.IsValid)
             {
                 db.Customers.Add(customer);
                 db.SaveChanges();
+
+                //Create User
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db2));
+                var user = userManager.FindByName(customer.Email);
+                if (user == null)
+                {
+                    user = new ApplicationUser
+                    {
+                        UserName = customer.Email,
+                        Email = customer.Email
+                    };
+                    userManager.Create(user, customer.DocumentNumber);
+                    //AddRole
+                    userManager.AddToRole(user.Id, "Customer");
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -62,6 +85,7 @@ namespace King_Market.Controllers
         }
 
         // GET: Customers/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -82,6 +106,7 @@ namespace King_Market.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "CustomerId,DocumentTypeId,DocumentNumber,BusinessName,FirstName,LastName,SecondLastName,Address,Email,Web,Phone")] Customer customer)
         {
             if (ModelState.IsValid)
@@ -95,6 +120,7 @@ namespace King_Market.Controllers
         }
 
         // GET: Customers/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -112,11 +138,17 @@ namespace King_Market.Controllers
         // POST: Customers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Customer customer = db.Customers.Find(id);
             db.Customers.Remove(customer);
             db.SaveChanges();
+
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db2));
+            var user = userManager.FindByName(customer.Email);
+            userManager.Delete(user);
+
             return RedirectToAction("Index");
         }
 
@@ -125,6 +157,7 @@ namespace King_Market.Controllers
             if (disposing)
             {
                 db.Dispose();
+                db2.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -10,18 +10,18 @@ using King_Market.Models;
 
 namespace King_Market.Controllers
 {
-    public class ProductTypesController : Controller
+    public class EmployeeTypesController : Controller
     {
         private King_MarketContext db = new King_MarketContext();
 
-        // GET: ProductTypes
+        // GET: EmployeeTypes
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            return View(db.ProductTypes.ToList());
+            return View(db.EmployeeTypes.ToList());
         }
 
-        // GET: ProductTypes/Details/5
+        // GET: EmployeeTypes/Details/5
         [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
@@ -29,40 +29,40 @@ namespace King_Market.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ProductType productType = db.ProductTypes.Find(id);
-            if (productType == null)
+            EmployeeType employeeType = db.EmployeeTypes.Find(id);
+            if (employeeType == null)
             {
                 return HttpNotFound();
             }
-            return View(productType);
+            return View(employeeType);
         }
 
-        // GET: ProductTypes/Create
+        // GET: EmployeeTypes/Create
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ProductTypes/Create
+        // POST: EmployeeTypes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Create([Bind(Include = "ProductTypeId,Name")] ProductType productType)
+        public ActionResult Create([Bind(Include = "EmployeeTypeId,Name")] EmployeeType employeeType)
         {
             if (ModelState.IsValid)
             {
-                db.ProductTypes.Add(productType);
+                db.EmployeeTypes.Add(employeeType);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(productType);
+            return View(employeeType);
         }
 
-        // GET: ProductTypes/Edit/5
+        // GET: EmployeeTypes/Edit/5
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
@@ -70,32 +70,32 @@ namespace King_Market.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ProductType productType = db.ProductTypes.Find(id);
-            if (productType == null)
+            EmployeeType employeeType = db.EmployeeTypes.Find(id);
+            if (employeeType == null)
             {
                 return HttpNotFound();
             }
-            return View(productType);
+            return View(employeeType);
         }
 
-        // POST: ProductTypes/Edit/5
+        // POST: EmployeeTypes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit([Bind(Include = "ProductTypeId,Name")] ProductType productType)
+        public ActionResult Edit([Bind(Include = "EmployeeTypeId,Name")] EmployeeType employeeType)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(productType).State = EntityState.Modified;
+                db.Entry(employeeType).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(productType);
+            return View(employeeType);
         }
 
-        // GET: ProductTypes/Delete/5
+        // GET: EmployeeTypes/Delete/5
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
@@ -103,22 +103,22 @@ namespace King_Market.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ProductType productType = db.ProductTypes.Find(id);
-            if (productType == null)
+            EmployeeType employeeType = db.EmployeeTypes.Find(id);
+            if (employeeType == null)
             {
                 return HttpNotFound();
             }
-            return View(productType);
+            return View(employeeType);
         }
 
-        // POST: ProductTypes/Delete/5
+        // POST: EmployeeTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
-            ProductType productType = db.ProductTypes.Find(id);
-            db.ProductTypes.Remove(productType);
+            EmployeeType employeeType = db.EmployeeTypes.Find(id);
+            db.EmployeeTypes.Remove(employeeType);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

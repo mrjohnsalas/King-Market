@@ -13,7 +13,7 @@ namespace King_Market.Models
         [Display(Name = "Document Type")]
         public int DocumentTypeId { get; set; }
 
-        [Display(Name = "Document")]
+        [Display(Name = "Document Type Name")]
         [Required(ErrorMessage = "You must enter {0}")]
         [StringLength(50, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 3)]
         [Index(IsUnique = true)]
@@ -40,5 +40,7 @@ namespace King_Market.Models
         public virtual ICollection<BuyOrder> BuyOrders { get; set; }
 
         public virtual ICollection<IncomingGood> IncomingGoods { get; set; }
+
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

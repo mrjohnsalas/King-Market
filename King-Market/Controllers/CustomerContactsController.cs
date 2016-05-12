@@ -15,6 +15,7 @@ namespace King_Market.Controllers
         private King_MarketContext db = new King_MarketContext();
 
         // GET: CustomerContacts
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var customerContacts = db.CustomerContacts.Include(c => c.Customer).Include(c => c.DocumentType);
@@ -22,6 +23,7 @@ namespace King_Market.Controllers
         }
 
         // GET: CustomerContacts/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +39,7 @@ namespace King_Market.Controllers
         }
 
         // GET: CustomerContacts/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "FullName");
@@ -49,6 +52,7 @@ namespace King_Market.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "CustomerContactId,CustomerId,DocumentTypeId,DocumentNumber,FirstName,LastName,SecondLastName,Email,Phone")] CustomerContact customerContact)
         {
             if (ModelState.IsValid)
@@ -64,6 +68,7 @@ namespace King_Market.Controllers
         }
 
         // GET: CustomerContacts/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -85,6 +90,7 @@ namespace King_Market.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "CustomerContactId,CustomerId,DocumentTypeId,DocumentNumber,FirstName,LastName,SecondLastName,Email,Phone")] CustomerContact customerContact)
         {
             if (ModelState.IsValid)
@@ -99,6 +105,7 @@ namespace King_Market.Controllers
         }
 
         // GET: CustomerContacts/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -116,6 +123,7 @@ namespace King_Market.Controllers
         // POST: CustomerContacts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             CustomerContact customerContact = db.CustomerContacts.Find(id);

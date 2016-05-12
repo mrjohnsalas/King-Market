@@ -15,6 +15,7 @@ namespace King_Market.Controllers
         private King_MarketContext db = new King_MarketContext();
 
         // GET: Products
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var products = db.Products.Include(p => p.ProductType).Include(p => p.UnitMeasure);
@@ -22,6 +23,7 @@ namespace King_Market.Controllers
         }
 
         // GET: Products/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +39,7 @@ namespace King_Market.Controllers
         }
 
         // GET: Products/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.ProductTypeId = new SelectList(db.ProductTypes, "ProductTypeId", "Name");
@@ -49,6 +52,7 @@ namespace King_Market.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "ProductId,Name,Description,UnitPrice,UnitCost,ProductTypeId,Stock,MinStock,MaxStock,UnitMeasureId")] Product product)
         {
             if (ModelState.IsValid)
@@ -64,6 +68,7 @@ namespace King_Market.Controllers
         }
 
         // GET: Products/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -85,6 +90,7 @@ namespace King_Market.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "ProductId,Name,Description,UnitPrice,UnitCost,ProductTypeId,Stock,MinStock,MaxStock,UnitMeasureId")] Product product)
         {
             if (ModelState.IsValid)
@@ -99,6 +105,7 @@ namespace King_Market.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -116,6 +123,7 @@ namespace King_Market.Controllers
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Product product = db.Products.Find(id);

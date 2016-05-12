@@ -15,6 +15,7 @@ namespace King_Market.Controllers
         private King_MarketContext db = new King_MarketContext();
 
         // GET: DocumentTypes
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var documentTypes = db.DocumentTypes.Include(d => d.ClassDocumentType);
@@ -22,6 +23,7 @@ namespace King_Market.Controllers
         }
 
         // GET: DocumentTypes/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +39,7 @@ namespace King_Market.Controllers
         }
 
         // GET: DocumentTypes/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.ClassDocumentTypeId = new SelectList(db.ClassDocumentTypes, "ClassDocumentTypeId", "Name");
@@ -48,6 +51,7 @@ namespace King_Market.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "DocumentTypeId,Name,OnlyForEnterprise,ClassDocumentTypeId")] DocumentType documentType)
         {
             if (ModelState.IsValid)
@@ -62,6 +66,7 @@ namespace King_Market.Controllers
         }
 
         // GET: DocumentTypes/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -82,6 +87,7 @@ namespace King_Market.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "DocumentTypeId,Name,OnlyForEnterprise,ClassDocumentTypeId")] DocumentType documentType)
         {
             if (ModelState.IsValid)
@@ -95,6 +101,7 @@ namespace King_Market.Controllers
         }
 
         // GET: DocumentTypes/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -112,6 +119,7 @@ namespace King_Market.Controllers
         // POST: DocumentTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             DocumentType documentType = db.DocumentTypes.Find(id);
