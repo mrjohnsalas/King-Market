@@ -39,7 +39,7 @@ namespace King_Market.Controllers
         // GET: Suppliers/Create
         public ActionResult Create()
         {
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Name");
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1)), "DocumentTypeId", "Name");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace King_Market.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Name", supplier.DocumentTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1)), "DocumentTypeId", "Name", supplier.DocumentTypeId);
             return View(supplier);
         }
 
@@ -73,7 +73,7 @@ namespace King_Market.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Name", supplier.DocumentTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1)), "DocumentTypeId", "Name", supplier.DocumentTypeId);
             return View(supplier);
         }
 
@@ -90,7 +90,7 @@ namespace King_Market.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Name", supplier.DocumentTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1)), "DocumentTypeId", "Name", supplier.DocumentTypeId);
             return View(supplier);
         }
 

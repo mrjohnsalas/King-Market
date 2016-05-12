@@ -40,7 +40,7 @@ namespace King_Market.Controllers
         public ActionResult Create()
         {
             ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "FullName");
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Name");
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace King_Market.Controllers
             }
 
             ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "DocumentNumber", customerContact.CustomerId);
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Name", customerContact.DocumentTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", customerContact.DocumentTypeId);
             return View(customerContact);
         }
 
@@ -76,7 +76,7 @@ namespace King_Market.Controllers
                 return HttpNotFound();
             }
             ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "DocumentNumber", customerContact.CustomerId);
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Name", customerContact.DocumentTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", customerContact.DocumentTypeId);
             return View(customerContact);
         }
 
@@ -94,7 +94,7 @@ namespace King_Market.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "DocumentNumber", customerContact.CustomerId);
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Name", customerContact.DocumentTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", customerContact.DocumentTypeId);
             return View(customerContact);
         }
 

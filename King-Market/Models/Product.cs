@@ -57,6 +57,7 @@ namespace King_Market.Models
         [GreaterThan("MinStock")]
         public decimal MaxStock { get; set; }
 
+        [Display(Name = "Unit Measure")]
         [Required(ErrorMessage = "You must enter {0}")]
         public int UnitMeasureId { get; set; }
 

@@ -39,7 +39,7 @@ namespace King_Market.Controllers
         // GET: SupplierContacts/Create
         public ActionResult Create()
         {
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Name");
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name");
             ViewBag.SupplierId = new SelectList(db.Suppliers, "SupplierId", "BusinessName");
             return View();
         }
@@ -58,7 +58,7 @@ namespace King_Market.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Name", supplierContact.DocumentTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", supplierContact.DocumentTypeId);
             ViewBag.SupplierId = new SelectList(db.Suppliers, "SupplierId", "DocumentNumber", supplierContact.SupplierId);
             return View(supplierContact);
         }
@@ -75,7 +75,7 @@ namespace King_Market.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Name", supplierContact.DocumentTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", supplierContact.DocumentTypeId);
             ViewBag.SupplierId = new SelectList(db.Suppliers, "SupplierId", "DocumentNumber", supplierContact.SupplierId);
             return View(supplierContact);
         }
@@ -93,7 +93,7 @@ namespace King_Market.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Name", supplierContact.DocumentTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", supplierContact.DocumentTypeId);
             ViewBag.SupplierId = new SelectList(db.Suppliers, "SupplierId", "DocumentNumber", supplierContact.SupplierId);
             return View(supplierContact);
         }

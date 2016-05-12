@@ -19,6 +19,9 @@ namespace King_Market.Models
         [Index(IsUnique = true)]
         public string Name { get; set; }
 
+        [Display(Name = "Only For Enterprise?")]
+        public bool OnlyForEnterprise { get; set; }
+
         [Required(ErrorMessage = "You must enter {0}")]
         public int ClassDocumentTypeId { get; set; }
 

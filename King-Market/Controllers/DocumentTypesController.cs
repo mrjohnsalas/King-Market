@@ -48,7 +48,7 @@ namespace King_Market.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DocumentTypeId,Name,ClassDocumentTypeId")] DocumentType documentType)
+        public ActionResult Create([Bind(Include = "DocumentTypeId,Name,OnlyForEnterprise,ClassDocumentTypeId")] DocumentType documentType)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace King_Market.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DocumentTypeId,Name,ClassDocumentTypeId")] DocumentType documentType)
+        public ActionResult Edit([Bind(Include = "DocumentTypeId,Name,OnlyForEnterprise,ClassDocumentTypeId")] DocumentType documentType)
         {
             if (ModelState.IsValid)
             {
