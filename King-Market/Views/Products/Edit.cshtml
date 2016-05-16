@@ -92,7 +92,7 @@
         <div class="form-group">
             @Html.Label("Files:", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="file" name="file" multiple="multiple"/>
+                <input type="file" name="file" multiple />
             </div>
             <ul class="attachment">
                 @foreach (var photo in Model.ProductPhotos)
@@ -129,7 +129,7 @@
                     type: 'POST',
                     data: { id: $(this).data('id') }
                 }).done(function (data) {
-                    if (data.Result == "OK") {
+                    if (data.Result == "Ok") {
                         $ctrl.closest('li').remove();
                     }
                     else if (data.Result.Message) {
