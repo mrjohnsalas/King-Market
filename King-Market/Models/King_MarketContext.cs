@@ -48,6 +48,7 @@ namespace King_Market.Models
         public System.Data.Entity.DbSet<King_Market.Models.EmployeeType> EmployeeTypes { get; set; }
 
         public System.Data.Entity.DbSet<King_Market.Models.Employee> Employees { get; set; }
-    
+
+        public System.Data.Entity.DbSet<King_Market.Models.ProductPhoto> ProductPhotos { get; set; }
     }
 }

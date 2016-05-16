@@ -201,12 +201,14 @@
     <Compile Include="Models\DocumentType.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeType.cs" />
+    <Compile Include="Models\FileType.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IncomingGood.cs" />
     <Compile Include="Models\IncomingGoodDetail.cs" />
     <Compile Include="Models\King_MarketContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductPhoto.cs" />
     <Compile Include="Models\ProductType.cs" />
     <Compile Include="Models\SaleOrder.cs" />
     <Compile Include="Models\SaleOrderDetail.cs" />

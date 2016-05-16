@@ -72,5 +72,7 @@ namespace King_Market.Models
         public virtual ICollection<BuyOrderDetail> BuyOrderDetails { get; set; }
 
         public virtual ICollection<IncomingGoodDetail> IncomingGoodDetails { get; set; }
+
+        public virtual ICollection<ProductPhoto> ProductPhotos { get; set; }
     }
 }

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using King_Market.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace King_Market.Controllers
 {
@@ -57,6 +59,24 @@ namespace King_Market.Controllers
         {
             if (ModelState.IsValid)
             {
+                List<ProductPhoto> productPhotos = new List<ProductPhoto>();
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    var file = Request.Files[i];
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        var photo = new ProductPhoto
+                        {
+                            FileName = Path.GetFileName(file.FileName),
+                            FileType = FileType.Photo,
+                            ContentType = file.ContentType
+                        };
+                        using (var reader = new BinaryReader(file.InputStream))
+                            photo.Content = reader.ReadBytes(file.ContentLength);
+                        productPhotos.Add(photo);
+                    }
+                }
+                product.ProductPhotos = productPhotos;
                 db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -75,7 +95,7 @@ namespace King_Market.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
+            Product product = db.Products.Include(f => f.ProductPhotos).SingleOrDefault(p => p.ProductId == id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -95,6 +115,26 @@ namespace King_Market.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (product.ProductPhotos == null)
+                    product.ProductPhotos = new List<ProductPhoto>();
+
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    var file = Request.Files[i];
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        var photo = new ProductPhoto
+                        {
+                            FileName = Path.GetFileName(file.FileName),
+                            FileType = FileType.Photo,
+                            ContentType = file.ContentType,
+                            ProductId = product.ProductId
+                        };
+                        using (var reader = new BinaryReader(file.InputStream))
+                            photo.Content = reader.ReadBytes(file.ContentLength);
+                        product.ProductPhotos.Add(photo);
+                    }
+                }
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -112,7 +152,7 @@ namespace King_Market.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
+            Product product = db.Products.Include(f => f.ProductPhotos).SingleOrDefault(p => p.ProductId == id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -127,9 +167,43 @@ namespace King_Market.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Product product = db.Products.Find(id);
+
+            var photos = db.ProductPhotos.ToList().FindAll(p => p.ProductId.Equals(id));
+            foreach (var photo in photos)
+                db.ProductPhotos.Remove(photo);
+
             db.Products.Remove(product);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult DeleteFile(int? id)
+        {
+            if (!id.HasValue)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new {Result = "Error"});
+            }
+            try
+            {
+                ProductPhoto photo = db.ProductPhotos.Find(id);
+                if (photo == null)
+                {
+                    Response.StatusCode = (int) HttpStatusCode.NotFound;
+                    return Json(new { Result = "Error" });
+                }
+
+                db.ProductPhotos.Remove(photo);
+                db.SaveChanges();
+
+                return Json(new {Result = "Ok"});
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Result = "ERROR", Message = ex.Message });
+            }
         }
 
         protected override void Dispose(bool disposing)
