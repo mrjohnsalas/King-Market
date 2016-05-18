@@ -23,7 +23,17 @@ textarea {
     max-width: 280px;
 }
 
-.carousel{
+.carousel-product{
     width:400px !important;
     height:300px !important;
+}
+
+.body-content {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.js-row-content {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

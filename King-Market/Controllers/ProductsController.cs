@@ -133,6 +133,7 @@ namespace King_Market.Controllers
                         using (var reader = new BinaryReader(file.InputStream))
                             photo.Content = reader.ReadBytes(file.ContentLength);
                         product.ProductPhotos.Add(photo);
+                        db.Entry(photo).State = EntityState.Added;
                     }
                 }
                 db.Entry(product).State = EntityState.Modified;
@@ -152,7 +153,7 @@ namespace King_Market.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Include(f => f.ProductPhotos).SingleOrDefault(p => p.ProductId == id);
+            Product product = db.Products.Find(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -204,6 +205,12 @@ namespace King_Market.Controllers
             {
                 return Json(new { Result = "ERROR", Message = ex.Message });
             }
+        }
+
+        public FileResult Download(int? id)
+        {
+            ProductPhoto photo = db.ProductPhotos.Find(id);
+            return File(photo.Content, System.Net.Mime.MediaTypeNames.Application.Octet, photo.FileName);
         }
 
         protected override void Dispose(bool disposing)
