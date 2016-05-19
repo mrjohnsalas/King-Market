@@ -12,31 +12,31 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ProductType.Name)
+            @Html.ActionLink("ProductType", "Index", new { sortOrder = ViewBag.ProductTypeSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UnitMeasure.ShortName)
+            @Html.ActionLink("UnitMeasure", "Index", new { sortOrder = ViewBag.UnitMeasureSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.ActionLink("Description", "Index", new { sortOrder = ViewBag.DescriptionSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UnitPrice)
+            @Html.ActionLink("UnitPrice", "Index", new { sortOrder = ViewBag.UnitPriceSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UnitCost)
+            @Html.ActionLink("UnitCost", "Index", new { sortOrder = ViewBag.UnitCostSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Stock)
+            @Html.ActionLink("Stock", "Index", new { sortOrder = ViewBag.StockSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MinStock)
+            @Html.ActionLink("MinStock", "Index", new { sortOrder = ViewBag.MinStockSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MaxStock)
+            @Html.ActionLink("MaxStock", "Index", new { sortOrder = ViewBag.MaxStockSortParm })
         </th>
         <th></th>
     </tr>

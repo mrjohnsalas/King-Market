@@ -18,9 +18,78 @@ namespace King_Market.Controllers
 
         // GET: Products
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
+            ViewBag.ProductTypeSortParm = sortOrder == "ProductType" ? "ProductType_Desc" : "ProductType";
+            ViewBag.UnitMeasureSortParm = sortOrder == "UnitMeasure" ? "UnitMeasure_Desc" : "UnitMeasure";
+            ViewBag.DescriptionSortParm = sortOrder == "Description" ? "Description_Desc" : "Description";
+            ViewBag.UnitPriceSortParm = sortOrder == "UnitPrice" ? "UnitPrice_Desc" : "UnitPrice";
+            ViewBag.UnitCostSortParm = sortOrder == "UnitCost" ? "UnitCost_Desc" : "UnitCost";
+            ViewBag.StockSortParm = sortOrder == "Stock" ? "Stock_Desc" : "Stock";
+            ViewBag.MinStockSortParm = sortOrder == "MinStock" ? "MinStock_Desc" : "MinStock";
+            ViewBag.MaxStockSortParm = sortOrder == "MaxStock" ? "MaxStock_Desc" : "MaxStock";
+
             var products = db.Products.Include(p => p.ProductType).Include(p => p.UnitMeasure);
+
+            switch (sortOrder)
+            {
+                case "Name_Desc":
+                    products = products.OrderByDescending(p => p.Name);
+                    break;
+                case "ProductType":
+                    products = products.OrderBy(p => p.ProductType.Name);
+                    break;
+                case "ProductType_Desc":
+                    products = products.OrderByDescending(p => p.ProductType.Name);
+                    break;
+                case "UnitMeasure":
+                    products = products.OrderBy(p => p.UnitMeasure.ShortName);
+                    break;
+                case "UnitMeasure_Desc":
+                    products = products.OrderByDescending(p => p.UnitMeasure.ShortName);
+                    break;
+                case "Description":
+                    products = products.OrderBy(p => p.Description);
+                    break;
+                case "Description_Desc":
+                    products = products.OrderByDescending(p => p.Description);
+                    break;
+                case "UnitPrice":
+                    products = products.OrderBy(p => p.UnitPrice);
+                    break;
+                case "UnitPrice_Desc":
+                    products = products.OrderByDescending(p => p.UnitPrice);
+                    break;
+                case "UnitCost":
+                    products = products.OrderBy(p => p.UnitCost);
+                    break;
+                case "UnitCost_Desc":
+                    products = products.OrderByDescending(p => p.UnitCost);
+                    break;
+                case "Stock":
+                    products = products.OrderBy(p => p.Stock);
+                    break;
+                case "Stock_Desc":
+                    products = products.OrderByDescending(p => p.Stock);
+                    break;
+                case "MinStock":
+                    products = products.OrderBy(p => p.MinStock);
+                    break;
+                case "MinStock_Desc":
+                    products = products.OrderByDescending(p => p.MinStock);
+                    break;
+                case "MaxStock":
+                    products = products.OrderBy(p => p.MaxStock);
+                    break;
+                case "MaxStock_Desc":
+                    products = products.OrderByDescending(p => p.MaxStock);
+                    break;
+                default:
+                    products = products.OrderBy(p => p.Name);
+                    break;
+            }
+
             return View(products.ToList());
         }
 
