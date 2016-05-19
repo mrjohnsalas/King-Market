@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using King_Market.Models;
+using PagedList;
 
 namespace King_Market.Controllers
 {
@@ -16,9 +17,18 @@ namespace King_Market.Controllers
 
         // GET: EmployeeTypes
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
+
+            if (searchString != null)
+                page = 1;
+            else
+                searchString = currentFilter;
+
+            ViewBag.CurrentFilter = searchString;
+
             var employeeTypes = sortOrder == "Name_Desc" ?
                 String.IsNullOrEmpty(searchString) ?
                 db.EmployeeTypes.OrderByDescending(c => c.Name) :
@@ -27,7 +37,9 @@ namespace King_Market.Controllers
                 db.EmployeeTypes.OrderBy(c => c.Name) :
                 db.EmployeeTypes.OrderBy(c => c.Name).Where(s => s.Name.Contains(searchString));
 
-            return View(employeeTypes.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(employeeTypes.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: EmployeeTypes/Details/5

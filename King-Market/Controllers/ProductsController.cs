@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using King_Market.Models;
 using Microsoft.Ajax.Utilities;
+using PagedList;
 
 namespace King_Market.Controllers
 {
@@ -18,8 +19,9 @@ namespace King_Market.Controllers
 
         // GET: Products
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
             ViewBag.ProductTypeSortParm = sortOrder == "Product Type" ? "ProductType_Desc" : "Product Type";
             ViewBag.UnitMeasureSortParm = sortOrder == "Unit Measure" ? "UnitMeasure_Desc" : "Unit Measure";
@@ -29,6 +31,13 @@ namespace King_Market.Controllers
             ViewBag.StockSortParm = sortOrder == "Stock" ? "Stock_Desc" : "Stock";
             ViewBag.MinStockSortParm = sortOrder == "Min Stock" ? "MinStock_Desc" : "Min Stock";
             ViewBag.MaxStockSortParm = sortOrder == "Max Stock" ? "MaxStock_Desc" : "Max Stock";
+
+            if (searchString != null)
+                page = 1;
+            else
+                searchString = currentFilter;
+
+            ViewBag.CurrentFilter = searchString;
 
             var products = db.Products.Include(p => p.ProductType).Include(p => p.UnitMeasure);
 
@@ -96,7 +105,9 @@ namespace King_Market.Controllers
                     break;
             }
 
-            return View(products.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(products.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Products/Details/5

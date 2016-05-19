@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using King_Market.Models;
+using PagedList;
 
 namespace King_Market.Controllers
 {
@@ -16,9 +17,18 @@ namespace King_Market.Controllers
 
         // GET: ProductTypes
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
+
+            if (searchString != null)
+                page = 1;
+            else
+                searchString = currentFilter;
+
+            ViewBag.CurrentFilter = searchString;
+
             var productTypes = sortOrder == "Name_Desc" ?
                 String.IsNullOrEmpty(searchString) ?
                 db.ProductTypes.OrderByDescending(c => c.Name) :
@@ -27,7 +37,9 @@ namespace King_Market.Controllers
                 db.ProductTypes.OrderBy(c => c.Name) :
                 db.ProductTypes.OrderBy(c => c.Name).Where(s => s.Name.Contains(searchString));
 
-            return View(productTypes.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(productTypes.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: ProductTypes/Details/5

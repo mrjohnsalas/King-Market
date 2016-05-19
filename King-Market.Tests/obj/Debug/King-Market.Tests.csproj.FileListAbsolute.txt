@@ -70,6 +70,7 @@ D:\John\Desktop\King-Market\King-Market.Tests\bin\Debug\System.Web.Http.dll
 D:\John\Desktop\King-Market\King-Market.Tests\bin\Debug\Microsoft.Owin.Security.dll
 D:\John\Desktop\King-Market\King-Market.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.dll
 D:\John\Desktop\King-Market\King-Market.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
+D:\John\Desktop\King-Market\King-Market.Tests\bin\Debug\PagedList.dll
 D:\John\Desktop\King-Market\King-Market.Tests\bin\Debug\System.Web.Http.WebHost.dll
 D:\John\Desktop\King-Market\King-Market.Tests\bin\Debug\FoolproofValidation.dll
 D:\John\Desktop\King-Market\King-Market.Tests\bin\Debug\System.Net.Http.Formatting.dll
@@ -91,6 +92,7 @@ D:\John\Desktop\King-Market\King-Market.Tests\bin\Debug\System.Web.Http.xml
 D:\John\Desktop\King-Market\King-Market.Tests\bin\Debug\Microsoft.Owin.Security.xml
 D:\John\Desktop\King-Market\King-Market.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.xml
 D:\John\Desktop\King-Market\King-Market.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
+D:\John\Desktop\King-Market\King-Market.Tests\bin\Debug\PagedList.xml
 D:\John\Desktop\King-Market\King-Market.Tests\bin\Debug\System.Web.Http.WebHost.xml
 D:\John\Desktop\King-Market\King-Market.Tests\bin\Debug\System.Net.Http.Formatting.xml
 D:\John\Desktop\King-Market\King-Market.Tests\obj\Debug\King-Market.Tests.csprojResolveAssemblyReference.cache

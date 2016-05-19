@@ -1,4 +1,6 @@
-﻿@model IEnumerable<King_Market.Models.Product>
+﻿@model PagedList.IPagedList<King_Market.Models.Product>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css"/>
 
 @{
     ViewBag.Title = "Index";
@@ -10,10 +12,10 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index", "Products", FormMethod.Get))
 {
     <p>
-        Find: @Html.TextBox("SearchString")
+        Find: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
     </p>
 }
@@ -21,31 +23,31 @@
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Product Type", "Index", new { sortOrder = ViewBag.ProductTypeSortParm })
+            @Html.ActionLink("Product Type", "Index", new { sortOrder = ViewBag.ProductTypeSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("Unit Measure", "Index", new { sortOrder = ViewBag.UnitMeasureSortParm })
+            @Html.ActionLink("Unit Measure", "Index", new { sortOrder = ViewBag.UnitMeasureSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("Description", "Index", new { sortOrder = ViewBag.DescriptionSortParm })
+            @Html.ActionLink("Description", "Index", new { sortOrder = ViewBag.DescriptionSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("Unit Price", "Index", new { sortOrder = ViewBag.UnitPriceSortParm })
+            @Html.ActionLink("Unit Price", "Index", new { sortOrder = ViewBag.UnitPriceSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("Unit Cost", "Index", new { sortOrder = ViewBag.UnitCostSortParm })
+            @Html.ActionLink("Unit Cost", "Index", new { sortOrder = ViewBag.UnitCostSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("Stock", "Index", new { sortOrder = ViewBag.StockSortParm })
+            @Html.ActionLink("Stock", "Index", new { sortOrder = ViewBag.StockSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("Min Stock", "Index", new { sortOrder = ViewBag.MinStockSortParm })
+            @Html.ActionLink("Min Stock", "Index", new { sortOrder = ViewBag.MinStockSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("Max Stock", "Index", new { sortOrder = ViewBag.MaxStockSortParm })
+            @Html.ActionLink("Max Stock", "Index", new { sortOrder = ViewBag.MaxStockSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th></th>
     </tr>
@@ -88,3 +90,7 @@
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

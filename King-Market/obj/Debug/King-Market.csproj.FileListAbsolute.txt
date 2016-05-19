@@ -81,6 +81,8 @@ D:\John\Desktop\King-Market\King-Market\bin\Microsoft.Owin.Security.Twitter.dll
 D:\John\Desktop\King-Market\King-Market\bin\Microsoft.Web.Infrastructure.dll
 D:\John\Desktop\King-Market\King-Market\bin\Newtonsoft.Json.dll
 D:\John\Desktop\King-Market\King-Market\bin\Owin.dll
+D:\John\Desktop\King-Market\King-Market\bin\PagedList.dll
+D:\John\Desktop\King-Market\King-Market\bin\PagedList.Mvc.dll
 D:\John\Desktop\King-Market\King-Market\bin\System.Net.Http.Formatting.dll
 D:\John\Desktop\King-Market\King-Market\bin\System.Web.Helpers.dll
 D:\John\Desktop\King-Market\King-Market\bin\System.Web.Http.dll
@@ -94,6 +96,8 @@ D:\John\Desktop\King-Market\King-Market\bin\System.Web.WebPages.Razor.dll
 D:\John\Desktop\King-Market\King-Market\bin\WebGrease.dll
 D:\John\Desktop\King-Market\King-Market\bin\Antlr3.Runtime.pdb
 D:\John\Desktop\King-Market\King-Market\bin\Newtonsoft.Json.xml
+D:\John\Desktop\King-Market\King-Market\bin\PagedList.xml
+D:\John\Desktop\King-Market\King-Market\bin\PagedList.Mvc.xml
 D:\John\Desktop\King-Market\King-Market\bin\System.Web.Helpers.xml
 D:\John\Desktop\King-Market\King-Market\bin\System.Web.Mvc.xml
 D:\John\Desktop\King-Market\King-Market\bin\System.Web.Optimization.xml

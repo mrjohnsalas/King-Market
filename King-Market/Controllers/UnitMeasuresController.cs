@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using King_Market.Models;
+using PagedList;
 
 namespace King_Market.Controllers
 {
@@ -16,10 +17,18 @@ namespace King_Market.Controllers
 
         // GET: UnitMeasures
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
             ViewBag.ShortNameSortParm = sortOrder == "Short Name" ? "ShortName_Desc" : "Short Name";
+
+            if (searchString != null)
+                page = 1;
+            else
+                searchString = currentFilter;
+
+            ViewBag.CurrentFilter = searchString;
 
             var unitMeasures = 
                 String.IsNullOrEmpty(searchString) ?
@@ -44,7 +53,9 @@ namespace King_Market.Controllers
                     break;
             }
 
-            return View(unitMeasures.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(unitMeasures.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: UnitMeasures/Details/5

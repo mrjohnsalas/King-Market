@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using King_Market.Models;
+using PagedList;
 
 namespace King_Market.Controllers
 {
@@ -16,8 +17,9 @@ namespace King_Market.Controllers
 
         // GET: SupplierContacts
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.BusinessNameSortParm = String.IsNullOrEmpty(sortOrder) ? "BusinessName_Desc" : String.Empty;
             ViewBag.DocumentTypeSortParm = sortOrder == "Document Type" ? "DocumentType_Desc" : "Document Type";
             ViewBag.DocumentNumberSortParm = sortOrder == "Document Number" ? "DocumentNumber_Desc" : "Document Number";
@@ -26,6 +28,13 @@ namespace King_Market.Controllers
             ViewBag.SecondLastNameSortParm = sortOrder == "Second Last Name" ? "SecondLastName_Desc" : "Second Last Name";
             ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_Desc" : "Email";
             ViewBag.PhoneSortParm = sortOrder == "Phone" ? "Phone_Desc" : "Phone";
+
+            if (searchString != null)
+                page = 1;
+            else
+                searchString = currentFilter;
+
+            ViewBag.CurrentFilter = searchString;
 
             var supplierContacts = db.SupplierContacts.Include(s => s.DocumentType).Include(s => s.Supplier);
 
@@ -92,7 +101,9 @@ namespace King_Market.Controllers
                     break;
             }
 
-            return View(supplierContacts.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(supplierContacts.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: SupplierContacts/Details/5

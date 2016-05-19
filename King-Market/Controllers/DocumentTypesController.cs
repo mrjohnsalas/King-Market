@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using King_Market.Models;
+using PagedList;
 
 namespace King_Market.Controllers
 {
@@ -16,11 +17,19 @@ namespace King_Market.Controllers
 
         // GET: DocumentTypes
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
             ViewBag.ClassDocumentSortParm = sortOrder == "Class Document" ? "ClassDocument_Desc" : "Class Document";
             ViewBag.OnlyForEnterpriseSortParm = sortOrder == "Only For Enterprise?" ? "OnlyForEnterprise_Desc" : "Only For Enterprise?";
+
+            if (searchString != null)
+                page = 1;
+            else
+                searchString = currentFilter;
+
+            ViewBag.CurrentFilter = searchString;
 
             var documentTypes = db.DocumentTypes.Include(d => d.ClassDocumentType);
 
@@ -49,7 +58,9 @@ namespace King_Market.Controllers
                     break;
             }
 
-            return View(documentTypes.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(documentTypes.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: DocumentTypes/Details/5

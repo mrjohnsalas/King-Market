@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using King_Market.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using PagedList;
 
 namespace King_Market.Controllers
 {
@@ -19,12 +20,20 @@ namespace King_Market.Controllers
 
         // GET: Suppliers
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.BusinessNameSortParm = String.IsNullOrEmpty(sortOrder) ? "BusinessName_Desc" : String.Empty;
             ViewBag.DocumentTypeSortParm = sortOrder == "Document Type" ? "DocumentType_Desc" : "Document Type";
             ViewBag.DocumentNumberSortParm = sortOrder == "Document Number" ? "DocumentNumber_Desc" : "Document Number";
             ViewBag.PhoneSortParm = sortOrder == "Phone" ? "Phone_Desc" : "Phone";
+
+            if (searchString != null)
+                page = 1;
+            else
+                searchString = currentFilter;
+
+            ViewBag.CurrentFilter = searchString;
 
             var suppliers = db.Suppliers.Include(s => s.DocumentType);
 
@@ -62,7 +71,9 @@ namespace King_Market.Controllers
                     break;
             }
 
-            return View(suppliers.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(suppliers.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Suppliers/Details/5
@@ -85,7 +96,7 @@ namespace King_Market.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1)), "DocumentTypeId", "Name");
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && d.OnlyForEnterprise), "DocumentTypeId", "Name");
             return View();
         }
 
@@ -120,7 +131,7 @@ namespace King_Market.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1)), "DocumentTypeId", "Name", supplier.DocumentTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && d.OnlyForEnterprise), "DocumentTypeId", "Name", supplier.DocumentTypeId);
             return View(supplier);
         }
 
@@ -137,7 +148,7 @@ namespace King_Market.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1)), "DocumentTypeId", "Name", supplier.DocumentTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && d.OnlyForEnterprise), "DocumentTypeId", "Name", supplier.DocumentTypeId);
             return View(supplier);
         }
 
@@ -155,7 +166,7 @@ namespace King_Market.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1)), "DocumentTypeId", "Name", supplier.DocumentTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && d.OnlyForEnterprise), "DocumentTypeId", "Name", supplier.DocumentTypeId);
             return View(supplier);
         }
 

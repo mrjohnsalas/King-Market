@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using King_Market.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using PagedList;
 
 namespace King_Market.Controllers
 {
@@ -19,8 +20,9 @@ namespace King_Market.Controllers
 
         // GET: Employees
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.FirstNameSortParm = String.IsNullOrEmpty(sortOrder) ? "FirstName_Desc" : String.Empty;
             ViewBag.DocumentTypeSortParm = sortOrder == "Document Type" ? "DocumentType_Desc" : "Document Type";
             ViewBag.EmployeeTypeSortParm = sortOrder == "Employee Type" ? "EmployeeType_Desc" : "Employee Type";
@@ -29,6 +31,13 @@ namespace King_Market.Controllers
             ViewBag.SecondLastNameSortParm = sortOrder == "Second Last Name" ? "SecondLastName_Desc" : "Second Last Name";
             ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_Desc" : "Email";
             ViewBag.PhoneSortParm = sortOrder == "Phone" ? "Phone_Desc" : "Phone";
+
+            if (searchString != null)
+                page = 1;
+            else
+                searchString = currentFilter;
+
+            ViewBag.CurrentFilter = searchString;
 
             var employees = db.Employees.Include(e => e.DocumentType).Include(e => e.EmployeeType);
 
@@ -94,7 +103,9 @@ namespace King_Market.Controllers
                     break;
             }
 
-            return View(employees.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(employees.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Employees/Details/5
