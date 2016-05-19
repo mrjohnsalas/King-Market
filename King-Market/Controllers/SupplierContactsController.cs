@@ -16,9 +16,71 @@ namespace King_Market.Controllers
 
         // GET: SupplierContacts
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
+            ViewBag.BusinessNameSortParm = String.IsNullOrEmpty(sortOrder) ? "BusinessName_Desc" : String.Empty;
+            ViewBag.DocumentTypeSortParm = sortOrder == "Document Type" ? "DocumentType_Desc" : "Document Type";
+            ViewBag.DocumentNumberSortParm = sortOrder == "Document Number" ? "DocumentNumber_Desc" : "Document Number";
+            ViewBag.FirstNameSortParm = sortOrder == "First Name" ? "FirstName_Desc" : "First Name";
+            ViewBag.LastNameSortParm = sortOrder == "Last Name" ? "LastName_Desc" : "Last Name";
+            ViewBag.SecondLastNameSortParm = sortOrder == "Second Last Name" ? "SecondLastName_Desc" : "Second Last Name";
+            ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_Desc" : "Email";
+            ViewBag.PhoneSortParm = sortOrder == "Phone" ? "Phone_Desc" : "Phone";
+
             var supplierContacts = db.SupplierContacts.Include(s => s.DocumentType).Include(s => s.Supplier);
+
+            switch (sortOrder)
+            {
+                case "BusinessName_Desc":
+                    supplierContacts = supplierContacts.OrderByDescending(p => p.Supplier.BusinessName);
+                    break;
+                case "DocumentType_Desc":
+                    supplierContacts = supplierContacts.OrderByDescending(p => p.DocumentType.Name);
+                    break;
+                case "Document Type":
+                    supplierContacts = supplierContacts.OrderBy(p => p.DocumentType.Name);
+                    break;
+                case "DocumentNumber_Desc":
+                    supplierContacts = supplierContacts.OrderByDescending(p => p.DocumentNumber);
+                    break;
+                case "Document Number":
+                    supplierContacts = supplierContacts.OrderBy(p => p.DocumentNumber);
+                    break;
+                case "FirstName_Desc":
+                    supplierContacts = supplierContacts.OrderByDescending(p => p.FirstName);
+                    break;
+                case "First Name":
+                    supplierContacts = supplierContacts.OrderBy(p => p.FirstName);
+                    break;
+                case "LastName_Desc":
+                    supplierContacts = supplierContacts.OrderByDescending(p => p.LastName);
+                    break;
+                case "Last Name":
+                    supplierContacts = supplierContacts.OrderBy(p => p.LastName);
+                    break;
+                case "Second Last Name":
+                    supplierContacts = supplierContacts.OrderBy(p => p.SecondLastName);
+                    break;
+                case "SecondLastName_Desc":
+                    supplierContacts = supplierContacts.OrderByDescending(p => p.SecondLastName);
+                    break;
+                case "Email":
+                    supplierContacts = supplierContacts.OrderBy(p => p.Email);
+                    break;
+                case "Email_Desc":
+                    supplierContacts = supplierContacts.OrderByDescending(p => p.Email);
+                    break;
+                case "Phone":
+                    supplierContacts = supplierContacts.OrderBy(p => p.Phone);
+                    break;
+                case "Phone_Desc":
+                    supplierContacts = supplierContacts.OrderByDescending(p => p.Phone);
+                    break;
+                default:
+                    supplierContacts = supplierContacts.OrderBy(p => p.Supplier.BusinessName);
+                    break;
+            }
+
             return View(supplierContacts.ToList());
         }
 

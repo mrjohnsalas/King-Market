@@ -16,9 +16,12 @@ namespace King_Market.Controllers
 
         // GET: ClassDocumentTypes
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
-            return View(db.ClassDocumentTypes.ToList());
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
+            var classDocumentTypes = sortOrder == "Name_Desc" ? db.ClassDocumentTypes.OrderByDescending(c => c.Name) : db.ClassDocumentTypes.OrderBy(c => c.Name);
+
+            return View(classDocumentTypes.ToList());
         }
 
         // GET: ClassDocumentTypes/Details/5

@@ -16,9 +16,12 @@ namespace King_Market.Controllers
 
         // GET: ProductTypes
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
-            return View(db.ProductTypes.ToList());
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
+            var productTypes = sortOrder == "Name_Desc" ? db.ProductTypes.OrderByDescending(c => c.Name) : db.ProductTypes.OrderBy(c => c.Name);
+
+            return View(productTypes.ToList());
         }
 
         // GET: ProductTypes/Details/5

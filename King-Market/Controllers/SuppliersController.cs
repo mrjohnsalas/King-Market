@@ -19,9 +19,43 @@ namespace King_Market.Controllers
 
         // GET: Suppliers
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
+            ViewBag.BusinessNameSortParm = String.IsNullOrEmpty(sortOrder) ? "BusinessName_Desc" : String.Empty;
+            ViewBag.DocumentTypeSortParm = sortOrder == "Document Type" ? "DocumentType_Desc" : "Document Type";
+            ViewBag.DocumentNumberSortParm = sortOrder == "Document Number" ? "DocumentNumber_Desc" : "Document Number";
+            ViewBag.PhoneSortParm = sortOrder == "Phone" ? "Phone_Desc" : "Phone";
+
             var suppliers = db.Suppliers.Include(s => s.DocumentType);
+
+            switch (sortOrder)
+            {
+                case "BusinessName_Desc":
+                    suppliers = suppliers.OrderByDescending(p => p.BusinessName);
+                    break;
+                case "Document Type":
+                    suppliers = suppliers.OrderBy(p => p.DocumentType.Name);
+                    break;
+                case "DocumentType_Desc":
+                    suppliers = suppliers.OrderByDescending(p => p.DocumentType.Name);
+                    break;
+                case "Document Number":
+                    suppliers = suppliers.OrderBy(p => p.DocumentNumber);
+                    break;
+                case "DocumentNumber_Desc":
+                    suppliers = suppliers.OrderByDescending(p => p.DocumentNumber);
+                    break;
+                case "Phone":
+                    suppliers = suppliers.OrderBy(p => p.Phone);
+                    break;
+                case "Phone_Desc":
+                    suppliers = suppliers.OrderByDescending(p => p.Phone);
+                    break;
+                default:
+                    suppliers = suppliers.OrderBy(p => p.BusinessName);
+                    break;
+            }
+
             return View(suppliers.ToList());
         }
 

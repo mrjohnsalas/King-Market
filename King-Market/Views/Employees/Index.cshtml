@@ -12,28 +12,28 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.DocumentType.Name)
+            @Html.ActionLink("Document Type", "Index", new { sortOrder = ViewBag.DocumentTypeSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EmployeeType.Name)
+            @Html.ActionLink("Employee Type", "Index", new { sortOrder = ViewBag.EmployeeTypeSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DocumentNumber)
+            @Html.ActionLink("Document Number", "Index", new { sortOrder = ViewBag.DocumentNumberSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.FirstNameSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastNameSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SecondLastName)
+            @Html.ActionLink("Second Last Name", "Index", new { sortOrder = ViewBag.SecondLastNameSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.ActionLink("Email", "Index", new { sortOrder = ViewBag.EmailSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Phone)
+            @Html.ActionLink("Phone", "Index", new { sortOrder = ViewBag.PhoneSortParm })
         </th>
         <th></th>
     </tr>

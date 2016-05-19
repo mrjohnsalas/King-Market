@@ -19,9 +19,71 @@ namespace King_Market.Controllers
 
         // GET: Employees
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
+            ViewBag.FirstNameSortParm = String.IsNullOrEmpty(sortOrder) ? "FirstName_Desc" : String.Empty;
+            ViewBag.DocumentTypeSortParm = sortOrder == "Document Type" ? "DocumentType_Desc" : "Document Type";
+            ViewBag.EmployeeTypeSortParm = sortOrder == "Employee Type" ? "EmployeeType_Desc" : "Employee Type";
+            ViewBag.DocumentNumberSortParm = sortOrder == "Document Number" ? "DocumentNumber_Desc" : "Document Number";
+            ViewBag.LastNameSortParm = sortOrder == "Last Name" ? "LastName_Desc" : "Last Name";
+            ViewBag.SecondLastNameSortParm = sortOrder == "Second Last Name" ? "SecondLastName_Desc" : "Second Last Name";
+            ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_Desc" : "Email";
+            ViewBag.PhoneSortParm = sortOrder == "Phone" ? "Phone_Desc" : "Phone";
+
             var employees = db.Employees.Include(e => e.DocumentType).Include(e => e.EmployeeType);
+
+            switch (sortOrder)
+            {
+                case "FirstName_Desc":
+                    employees = employees.OrderByDescending(p => p.FirstName);
+                    break;
+                case "DocumentType_Desc":
+                    employees = employees.OrderByDescending(p => p.DocumentType.Name);
+                    break;
+                case "Document Type":
+                    employees = employees.OrderBy(p => p.DocumentType.Name);
+                    break;
+                case "EmployeeType_Desc":
+                    employees = employees.OrderByDescending(p => p.EmployeeType.Name);
+                    break;
+                case "Employee Type":
+                    employees = employees.OrderBy(p => p.EmployeeType.Name);
+                    break;
+                case "DocumentNumber_Desc":
+                    employees = employees.OrderByDescending(p => p.DocumentNumber);
+                    break;
+                case "Document Number":
+                    employees = employees.OrderBy(p => p.DocumentNumber);
+                    break;
+                case "LastName_Desc":
+                    employees = employees.OrderByDescending(p => p.LastName);
+                    break;
+                case "Last Name":
+                    employees = employees.OrderBy(p => p.LastName);
+                    break;
+                case "Second Last Name":
+                    employees = employees.OrderBy(p => p.SecondLastName);
+                    break;
+                case "SecondLastName_Desc":
+                    employees = employees.OrderByDescending(p => p.SecondLastName);
+                    break;
+                case "Email":
+                    employees = employees.OrderBy(p => p.Email);
+                    break;
+                case "Email_Desc":
+                    employees = employees.OrderByDescending(p => p.Email);
+                    break;
+                case "Phone":
+                    employees = employees.OrderBy(p => p.Phone);
+                    break;
+                case "Phone_Desc":
+                    employees = employees.OrderByDescending(p => p.Phone);
+                    break;
+                default:
+                    employees = employees.OrderBy(p => p.FirstName);
+                    break;
+            }
+
             return View(employees.ToList());
         }
 

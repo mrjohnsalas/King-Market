@@ -19,9 +19,64 @@ namespace King_Market.Controllers
 
         // GET: Customers
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
+            ViewBag.BusinessNameSortParm = String.IsNullOrEmpty(sortOrder) ? "BusinessName_Desc" : String.Empty;
+            ViewBag.DocumentTypeSortParm = sortOrder == "Document Type" ? "DocumentType_Desc" : "Document Type";
+            ViewBag.DocumentNumberSortParm = sortOrder == "Document Number" ? "DocumentNumber_Desc" : "Document Number";
+            ViewBag.FirstNameSortParm = sortOrder == "First Name" ? "FirstName_Desc" : "First Name";
+            ViewBag.LastNameSortParm = sortOrder == "Last Name" ? "LastName_Desc" : "Last Name";
+            ViewBag.SecondLastNameSortParm = sortOrder == "Second Last Name" ? "SecondLastName_Desc" : "Second Last Name";
+            ViewBag.PhoneSortParm = sortOrder == "Phone" ? "Phone_Desc" : "Phone";
+
             var customers = db.Customers.Include(c => c.DocumentType);
+
+            switch (sortOrder)
+            {
+                case "BusinessName_Desc":
+                    customers = customers.OrderByDescending(p => p.BusinessName);
+                    break;
+                case "Document Type":
+                    customers = customers.OrderBy(p => p.DocumentType.Name);
+                    break;
+                case "DocumentType_Desc":
+                    customers = customers.OrderByDescending(p => p.DocumentType.Name);
+                    break;
+                case "Document Number":
+                    customers = customers.OrderBy(p => p.DocumentNumber);
+                    break;
+                case "DocumentNumber_Desc":
+                    customers = customers.OrderByDescending(p => p.DocumentNumber);
+                    break;
+                case "First Name":
+                    customers = customers.OrderBy(p => p.FirstName);
+                    break;
+                case "FirstName_Desc":
+                    customers = customers.OrderByDescending(p => p.FirstName);
+                    break;
+                case "Last Name":
+                    customers = customers.OrderBy(p => p.LastName);
+                    break;
+                case "LastName_Desc":
+                    customers = customers.OrderByDescending(p => p.LastName);
+                    break;
+                case "Second Last Name":
+                    customers = customers.OrderBy(p => p.SecondLastName);
+                    break;
+                case "SecondLastName_Desc":
+                    customers = customers.OrderByDescending(p => p.SecondLastName);
+                    break;
+                case "Phone":
+                    customers = customers.OrderBy(p => p.Phone);
+                    break;
+                case "Phone_Desc":
+                    customers = customers.OrderByDescending(p => p.Phone);
+                    break;
+                default:
+                    customers = customers.OrderBy(p => p.BusinessName);
+                    break;
+            }
+
             return View(customers.ToList());
         }
 

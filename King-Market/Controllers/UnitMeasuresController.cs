@@ -16,9 +16,30 @@ namespace King_Market.Controllers
 
         // GET: UnitMeasures
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
-            return View(db.UnitMeasures.ToList());
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
+            ViewBag.ShortNameSortParm = sortOrder == "Short Name" ? "ShortName_Desc" : "Short Name";
+
+            var unitMeasures = db.UnitMeasures.OrderBy(c => c.Name);
+
+            switch (sortOrder)
+            {
+                case "Name_Desc":
+                    unitMeasures = unitMeasures.OrderByDescending(p => p.Name);
+                    break;
+                case "Short Name":
+                    unitMeasures = unitMeasures.OrderBy(p => p.ShortName);
+                    break;
+                case "ShortName_Desc":
+                    unitMeasures = unitMeasures.OrderByDescending(p => p.ShortName);
+                    break;
+                default:
+                    unitMeasures = unitMeasures.OrderBy(p => p.Name);
+                    break;
+            }
+
+            return View(unitMeasures.ToList());
         }
 
         // GET: UnitMeasures/Details/5

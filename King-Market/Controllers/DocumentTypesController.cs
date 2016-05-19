@@ -16,9 +16,36 @@ namespace King_Market.Controllers
 
         // GET: DocumentTypes
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
+            ViewBag.ClassDocumentSortParm = sortOrder == "Class Document" ? "ClassDocument_Desc" : "Class Document";
+            ViewBag.OnlyForEnterpriseSortParm = sortOrder == "Only For Enterprise?" ? "OnlyForEnterprise_Desc" : "Only For Enterprise?";
+
             var documentTypes = db.DocumentTypes.Include(d => d.ClassDocumentType);
+
+            switch (sortOrder)
+            {
+                case "Name_Desc":
+                    documentTypes = documentTypes.OrderByDescending(p => p.Name);
+                    break;
+                case "Class Document":
+                    documentTypes = documentTypes.OrderBy(p => p.ClassDocumentType.Name);
+                    break;
+                case "ClassDocument_Desc":
+                    documentTypes = documentTypes.OrderByDescending(p => p.ClassDocumentType.Name);
+                    break;
+                case "Only For Enterprise?":
+                    documentTypes = documentTypes.OrderBy(p => p.OnlyForEnterprise);
+                    break;
+                case "OnlyForEnterprise_Desc":
+                    documentTypes = documentTypes.OrderByDescending(p => p.OnlyForEnterprise);
+                    break;
+                default:
+                    documentTypes = documentTypes.OrderBy(p => p.Name);
+                    break;
+            }
+
             return View(documentTypes.ToList());
         }
 

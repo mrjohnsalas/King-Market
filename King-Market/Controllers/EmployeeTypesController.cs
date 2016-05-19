@@ -16,9 +16,12 @@ namespace King_Market.Controllers
 
         // GET: EmployeeTypes
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
-            return View(db.EmployeeTypes.ToList());
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
+            var employeeTypes = sortOrder == "Name_Desc" ? db.EmployeeTypes.OrderByDescending(c => c.Name) : db.EmployeeTypes.OrderBy(c => c.Name);
+
+            return View(employeeTypes.ToList());
         }
 
         // GET: EmployeeTypes/Details/5

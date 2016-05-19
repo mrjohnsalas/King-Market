@@ -16,9 +16,12 @@ namespace King_Market.Controllers
 
         // GET: Status
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
-            return View(db.Status.ToList());
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
+            var status = sortOrder == "Name_Desc" ? db.Status.OrderByDescending(c => c.Name) : db.Status.OrderBy(c => c.Name);
+
+            return View(status.ToList());
         }
 
         // GET: Status/Details/5

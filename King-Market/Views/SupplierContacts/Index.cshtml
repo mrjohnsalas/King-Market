@@ -12,28 +12,28 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.DocumentType.Name)
+            @Html.ActionLink("Business Name", "Index", new { sortOrder = ViewBag.BusinessNameSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Supplier.DocumentNumber)
+            @Html.ActionLink("Document Type", "Index", new { sortOrder = ViewBag.DocumentTypeSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DocumentNumber)
+            @Html.ActionLink("Document Number", "Index", new { sortOrder = ViewBag.DocumentNumberSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.FirstNameSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastNameSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SecondLastName)
+            @Html.ActionLink("Second Last Name", "Index", new { sortOrder = ViewBag.SecondLastNameSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.ActionLink("Email", "Index", new { sortOrder = ViewBag.EmailSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Phone)
+            @Html.ActionLink("Phone", "Index", new { sortOrder = ViewBag.PhoneSortParm })
         </th>
         <th></th>
     </tr>
@@ -41,10 +41,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.DocumentType.Name)
+            @Html.DisplayFor(modelItem => item.Supplier.BusinessName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Supplier.DocumentNumber)
+            @Html.DisplayFor(modelItem => item.DocumentType.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DocumentNumber)
@@ -65,9 +65,9 @@
             @Html.DisplayFor(modelItem => item.Phone)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SupplierContactId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SupplierContactId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SupplierContactId })
+            @Html.ActionLink("Edit", "Edit", new {id = item.SupplierContactId}) |
+            @Html.ActionLink("Details", "Details", new {id = item.SupplierContactId}) |
+            @Html.ActionLink("Delete", "Delete", new {id = item.SupplierContactId})
         </td>
     </tr>
 }
