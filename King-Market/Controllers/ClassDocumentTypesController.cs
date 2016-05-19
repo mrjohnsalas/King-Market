@@ -16,10 +16,16 @@ namespace King_Market.Controllers
 
         // GET: ClassDocumentTypes
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
-            var classDocumentTypes = sortOrder == "Name_Desc" ? db.ClassDocumentTypes.OrderByDescending(c => c.Name) : db.ClassDocumentTypes.OrderBy(c => c.Name);
+            var classDocumentTypes = sortOrder == "Name_Desc" ?
+                String.IsNullOrEmpty(searchString) ? 
+                db.ClassDocumentTypes.OrderByDescending(c => c.Name) : 
+                db.ClassDocumentTypes.OrderByDescending(c => c.Name).Where(s => s.Name.Contains(searchString)) :
+                String.IsNullOrEmpty(searchString) ? 
+                db.ClassDocumentTypes.OrderBy(c => c.Name) : 
+                db.ClassDocumentTypes.OrderBy(c => c.Name).Where(s => s.Name.Contains(searchString));
 
             return View(classDocumentTypes.ToList());
         }

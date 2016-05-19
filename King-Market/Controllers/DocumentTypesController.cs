@@ -16,13 +16,16 @@ namespace King_Market.Controllers
 
         // GET: DocumentTypes
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
             ViewBag.ClassDocumentSortParm = sortOrder == "Class Document" ? "ClassDocument_Desc" : "Class Document";
             ViewBag.OnlyForEnterpriseSortParm = sortOrder == "Only For Enterprise?" ? "OnlyForEnterprise_Desc" : "Only For Enterprise?";
 
             var documentTypes = db.DocumentTypes.Include(d => d.ClassDocumentType);
+
+            if (!String.IsNullOrEmpty(searchString))
+                documentTypes = documentTypes.Where(s => s.ClassDocumentType.Name.Contains(searchString) || s.Name.Contains(searchString));
 
             switch (sortOrder)
             {

@@ -19,7 +19,7 @@ namespace King_Market.Controllers
 
         // GET: Customers
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.BusinessNameSortParm = String.IsNullOrEmpty(sortOrder) ? "BusinessName_Desc" : String.Empty;
             ViewBag.DocumentTypeSortParm = sortOrder == "Document Type" ? "DocumentType_Desc" : "Document Type";
@@ -30,6 +30,16 @@ namespace King_Market.Controllers
             ViewBag.PhoneSortParm = sortOrder == "Phone" ? "Phone_Desc" : "Phone";
 
             var customers = db.Customers.Include(c => c.DocumentType);
+
+            if (!String.IsNullOrEmpty(searchString))
+                customers = customers.Where(s =>
+                    s.DocumentType.Name.Contains(searchString) ||
+                    s.DocumentNumber.Contains(searchString) ||
+                    s.BusinessName.Contains(searchString) ||
+                    s.FirstName.Contains(searchString) ||
+                    s.LastName.Contains(searchString) ||
+                    s.SecondLastName.Contains(searchString) ||
+                    s.Phone.Contains(searchString));
 
             switch (sortOrder)
             {

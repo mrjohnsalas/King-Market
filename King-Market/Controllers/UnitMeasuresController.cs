@@ -16,12 +16,17 @@ namespace King_Market.Controllers
 
         // GET: UnitMeasures
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
             ViewBag.ShortNameSortParm = sortOrder == "Short Name" ? "ShortName_Desc" : "Short Name";
 
-            var unitMeasures = db.UnitMeasures.OrderBy(c => c.Name);
+            var unitMeasures = 
+                String.IsNullOrEmpty(searchString) ?
+                db.UnitMeasures.OrderBy(c => c.Name) :
+                db.UnitMeasures.OrderBy(c => c.Name).Where(s => 
+                    s.ShortName.Contains(searchString) ||
+                    s.Name.Contains(searchString));
 
             switch (sortOrder)
             {

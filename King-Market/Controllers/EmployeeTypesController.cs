@@ -16,10 +16,16 @@ namespace King_Market.Controllers
 
         // GET: EmployeeTypes
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
-            var employeeTypes = sortOrder == "Name_Desc" ? db.EmployeeTypes.OrderByDescending(c => c.Name) : db.EmployeeTypes.OrderBy(c => c.Name);
+            var employeeTypes = sortOrder == "Name_Desc" ?
+                String.IsNullOrEmpty(searchString) ?
+                db.EmployeeTypes.OrderByDescending(c => c.Name) :
+                db.EmployeeTypes.OrderByDescending(c => c.Name).Where(s => s.Name.Contains(searchString)) :
+                String.IsNullOrEmpty(searchString) ?
+                db.EmployeeTypes.OrderBy(c => c.Name) :
+                db.EmployeeTypes.OrderBy(c => c.Name).Where(s => s.Name.Contains(searchString));
 
             return View(employeeTypes.ToList());
         }

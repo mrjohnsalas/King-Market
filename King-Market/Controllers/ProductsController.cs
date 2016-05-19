@@ -18,7 +18,7 @@ namespace King_Market.Controllers
 
         // GET: Products
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_Desc" : String.Empty;
             ViewBag.ProductTypeSortParm = sortOrder == "Product Type" ? "ProductType_Desc" : "Product Type";
@@ -31,6 +31,12 @@ namespace King_Market.Controllers
             ViewBag.MaxStockSortParm = sortOrder == "Max Stock" ? "MaxStock_Desc" : "Max Stock";
 
             var products = db.Products.Include(p => p.ProductType).Include(p => p.UnitMeasure);
+
+            if (!String.IsNullOrEmpty(searchString))
+                products = products.Where(s => 
+                    s.Name.Contains(searchString) || 
+                    s.Description.Contains(searchString) || 
+                    s.UnitMeasure.ShortName.Contains(searchString));
 
             switch (sortOrder)
             {
