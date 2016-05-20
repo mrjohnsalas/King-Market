@@ -71,7 +71,7 @@ namespace King_Market.Controllers
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(suppliers.ToPagedList(pageNumber, pageSize));
         }
@@ -96,7 +96,7 @@ namespace King_Market.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && d.OnlyForEnterprise), "DocumentTypeId", "Name");
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.OrderBy(d => d.Name).ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && d.OnlyForEnterprise), "DocumentTypeId", "Name");
             return View();
         }
 
@@ -131,7 +131,7 @@ namespace King_Market.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && d.OnlyForEnterprise), "DocumentTypeId", "Name", supplier.DocumentTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.OrderBy(d => d.Name).ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && d.OnlyForEnterprise), "DocumentTypeId", "Name", supplier.DocumentTypeId);
             return View(supplier);
         }
 
@@ -148,7 +148,7 @@ namespace King_Market.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && d.OnlyForEnterprise), "DocumentTypeId", "Name", supplier.DocumentTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.OrderBy(d => d.Name).ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && d.OnlyForEnterprise), "DocumentTypeId", "Name", supplier.DocumentTypeId);
             return View(supplier);
         }
 
@@ -166,7 +166,7 @@ namespace King_Market.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && d.OnlyForEnterprise), "DocumentTypeId", "Name", supplier.DocumentTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.OrderBy(d => d.Name).ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && d.OnlyForEnterprise), "DocumentTypeId", "Name", supplier.DocumentTypeId);
             return View(supplier);
         }
 

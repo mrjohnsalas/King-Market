@@ -37,7 +37,7 @@ namespace King_Market.Controllers
                 db.EmployeeTypes.OrderBy(c => c.Name) :
                 db.EmployeeTypes.OrderBy(c => c.Name).Where(s => s.Name.Contains(searchString));
 
-            int pageSize = 3;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(employeeTypes.ToPagedList(pageNumber, pageSize));
         }

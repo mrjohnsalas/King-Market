@@ -105,7 +105,7 @@ namespace King_Market.Controllers
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 25;
             int pageNumber = (page ?? 1);
             return View(products.ToPagedList(pageNumber, pageSize));
         }
@@ -130,8 +130,8 @@ namespace King_Market.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.ProductTypeId = new SelectList(db.ProductTypes, "ProductTypeId", "Name");
-            ViewBag.UnitMeasureId = new SelectList(db.UnitMeasures, "UnitMeasureId", "ShortName");
+            ViewBag.ProductTypeId = new SelectList(db.ProductTypes.OrderBy(d => d.Name), "ProductTypeId", "Name");
+            ViewBag.UnitMeasureId = new SelectList(db.UnitMeasures.OrderBy(d => d.ShortName), "UnitMeasureId", "ShortName");
             return View();
         }
 
@@ -168,8 +168,8 @@ namespace King_Market.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ProductTypeId = new SelectList(db.ProductTypes, "ProductTypeId", "Name", product.ProductTypeId);
-            ViewBag.UnitMeasureId = new SelectList(db.UnitMeasures, "UnitMeasureId", "ShortName", product.UnitMeasureId);
+            ViewBag.ProductTypeId = new SelectList(db.ProductTypes.OrderBy(d => d.Name), "ProductTypeId", "Name", product.ProductTypeId);
+            ViewBag.UnitMeasureId = new SelectList(db.UnitMeasures.OrderBy(d => d.ShortName), "UnitMeasureId", "ShortName", product.UnitMeasureId);
             return View(product);
         }
 
@@ -186,8 +186,8 @@ namespace King_Market.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ProductTypeId = new SelectList(db.ProductTypes, "ProductTypeId", "Name", product.ProductTypeId);
-            ViewBag.UnitMeasureId = new SelectList(db.UnitMeasures, "UnitMeasureId", "ShortName", product.UnitMeasureId);
+            ViewBag.ProductTypeId = new SelectList(db.ProductTypes.OrderBy(d => d.Name), "ProductTypeId", "Name", product.ProductTypeId);
+            ViewBag.UnitMeasureId = new SelectList(db.UnitMeasures.OrderBy(d => d.ShortName), "UnitMeasureId", "ShortName", product.UnitMeasureId);
             return View(product);
         }
 
@@ -226,8 +226,8 @@ namespace King_Market.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProductTypeId = new SelectList(db.ProductTypes, "ProductTypeId", "Name", product.ProductTypeId);
-            ViewBag.UnitMeasureId = new SelectList(db.UnitMeasures, "UnitMeasureId", "ShortName", product.UnitMeasureId);
+            ViewBag.ProductTypeId = new SelectList(db.ProductTypes.OrderBy(d => d.Name), "ProductTypeId", "Name", product.ProductTypeId);
+            ViewBag.UnitMeasureId = new SelectList(db.UnitMeasures.OrderBy(d => d.ShortName), "UnitMeasureId", "ShortName", product.UnitMeasureId);
             return View(product);
         }
 

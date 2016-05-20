@@ -101,7 +101,7 @@ namespace King_Market.Controllers
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(customerContacts.ToPagedList(pageNumber, pageSize));
         }
@@ -126,8 +126,8 @@ namespace King_Market.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "FullName");
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name");
+            ViewBag.CustomerId = new SelectList(db.Customers.OrderBy(d => String.IsNullOrEmpty(d.BusinessName) ? d.FirstName : d.BusinessName), "CustomerId", "FullName");
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.OrderBy(d => d.Name).ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name");
             return View();
         }
 
@@ -146,8 +146,8 @@ namespace King_Market.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "DocumentNumber", customerContact.CustomerId);
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", customerContact.DocumentTypeId);
+            ViewBag.CustomerId = new SelectList(db.Customers.OrderBy(d => String.IsNullOrEmpty(d.BusinessName) ? d.FirstName : d.BusinessName), "CustomerId", "FullName", customerContact.CustomerId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.OrderBy(d => d.Name).ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", customerContact.DocumentTypeId);
             return View(customerContact);
         }
 
@@ -164,8 +164,8 @@ namespace King_Market.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "DocumentNumber", customerContact.CustomerId);
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", customerContact.DocumentTypeId);
+            ViewBag.CustomerId = new SelectList(db.Customers.OrderBy(d => String.IsNullOrEmpty(d.BusinessName) ? d.FirstName : d.BusinessName), "CustomerId", "FullName", customerContact.CustomerId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.OrderBy(d => d.Name).ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", customerContact.DocumentTypeId);
             return View(customerContact);
         }
 
@@ -183,8 +183,8 @@ namespace King_Market.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "DocumentNumber", customerContact.CustomerId);
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", customerContact.DocumentTypeId);
+            ViewBag.CustomerId = new SelectList(db.Customers.OrderBy(d => String.IsNullOrEmpty(d.BusinessName) ? d.FirstName : d.BusinessName), "CustomerId", "FullName", customerContact.CustomerId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.OrderBy(d => d.Name).ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", customerContact.DocumentTypeId);
             return View(customerContact);
         }
 

@@ -103,7 +103,7 @@ namespace King_Market.Controllers
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(employees.ToPagedList(pageNumber, pageSize));
         }
@@ -128,8 +128,8 @@ namespace King_Market.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name");
-            ViewBag.EmployeeTypeId = new SelectList(db.EmployeeTypes, "EmployeeTypeId", "Name");
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.OrderBy(d => d.Name).ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name");
+            ViewBag.EmployeeTypeId = new SelectList(db.EmployeeTypes.OrderBy(d => d.Name), "EmployeeTypeId", "Name");
             return View();
         }
 
@@ -167,8 +167,8 @@ namespace King_Market.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", employee.DocumentTypeId);
-            ViewBag.EmployeeTypeId = new SelectList(db.EmployeeTypes, "EmployeeTypeId", "Name", employee.EmployeeTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.OrderBy(d => d.Name).ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", employee.DocumentTypeId);
+            ViewBag.EmployeeTypeId = new SelectList(db.EmployeeTypes.OrderBy(d => d.Name), "EmployeeTypeId", "Name", employee.EmployeeTypeId);
             return View(employee);
         }
 
@@ -185,8 +185,8 @@ namespace King_Market.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", employee.DocumentTypeId);
-            ViewBag.EmployeeTypeId = new SelectList(db.EmployeeTypes, "EmployeeTypeId", "Name", employee.EmployeeTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.OrderBy(d => d.Name).ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", employee.DocumentTypeId);
+            ViewBag.EmployeeTypeId = new SelectList(db.EmployeeTypes.OrderBy(d => d.Name), "EmployeeTypeId", "Name", employee.EmployeeTypeId);
             return View(employee);
         }
 
@@ -225,8 +225,8 @@ namespace King_Market.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", employee.DocumentTypeId);
-            ViewBag.EmployeeTypeId = new SelectList(db.EmployeeTypes, "EmployeeTypeId", "Name", employee.EmployeeTypeId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.OrderBy(d => d.Name).ToList().FindAll(d => d.ClassDocumentTypeId.Equals(1) && !d.OnlyForEnterprise), "DocumentTypeId", "Name", employee.DocumentTypeId);
+            ViewBag.EmployeeTypeId = new SelectList(db.EmployeeTypes.OrderBy(d => d.Name), "EmployeeTypeId", "Name", employee.EmployeeTypeId);
             return View(employee);
         }
 
