@@ -122,5 +122,6 @@ D:\John\Desktop\King-Market\King-Market\bin\Microsoft.Owin.Security.OAuth.xml
 D:\John\Desktop\King-Market\King-Market\bin\Microsoft.Owin.Security.Google.xml
 D:\John\Desktop\King-Market\King-Market\bin\Microsoft.Owin.Security.Twitter.xml
 D:\John\Desktop\King-Market\King-Market\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\John\Desktop\King-Market\King-Market\obj\Debug\King-Market.csprojResolveAssemblyReference.cache
 D:\John\Desktop\King-Market\King-Market\obj\Debug\King-Market.dll
 D:\John\Desktop\King-Market\King-Market\obj\Debug\King-Market.pdb
