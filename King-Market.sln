@@ -6,6 +6,11 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "King-Market", "King-Market\King-Market.csproj", "{1A9358AA-B4FF-4F93-A055-7556F3A7F2D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "King-Market.Tests", "King-Market.Tests\King-Market.Tests.csproj", "{2FEFAF1B-3A43-4D4B-8074-C03846A3C253}"
+	ProjectSection(ProjectDependencies) = postProject
+		{43F83EFB-8AE2-4E5D-B046-A9028FFCC445} = {43F83EFB-8AE2-4E5D-B046-A9028FFCC445}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KingMarketService", "KingMarketService\KingMarketService.csproj", "{43F83EFB-8AE2-4E5D-B046-A9028FFCC445}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,10 @@ Global
 		{2FEFAF1B-3A43-4D4B-8074-C03846A3C253}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FEFAF1B-3A43-4D4B-8074-C03846A3C253}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FEFAF1B-3A43-4D4B-8074-C03846A3C253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43F83EFB-8AE2-4E5D-B046-A9028FFCC445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43F83EFB-8AE2-4E5D-B046-A9028FFCC445}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43F83EFB-8AE2-4E5D-B046-A9028FFCC445}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43F83EFB-8AE2-4E5D-B046-A9028FFCC445}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

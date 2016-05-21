@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KingMarketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ClassDocumentTypes">
+    <Key>
+      <PropertyRef Name="ClassDocumentTypeId" />
+    </Key>
+    <Property Name="ClassDocumentTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DocumentTypes">
+    <Key>
+      <PropertyRef Name="DocumentTypeId" />
+    </Key>
+    <Property Name="DocumentTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="OnlyForEnterprise" Type="bit" Nullable="false" />
+    <Property Name="ClassDocumentTypeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Suppliers">
+    <Key>
+      <PropertyRef Name="SupplierId" />
+    </Key>
+    <Property Name="SupplierId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DocumentTypeId" Type="int" Nullable="false" />
+    <Property Name="DocumentNumber" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="BusinessName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="80" Nullable="false" />
+    <Property Name="Web" Type="nvarchar(max)" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_dbo_DocumentTypes_dbo_ClassDocumentTypes_ClassDocumentTypeId">
+    <End Role="ClassDocumentTypes" Type="Self.ClassDocumentTypes" Multiplicity="1" />
+    <End Role="DocumentTypes" Type="Self.DocumentTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClassDocumentTypes">
+        <PropertyRef Name="ClassDocumentTypeId" />
+      </Principal>
+      <Dependent Role="DocumentTypes">
+        <PropertyRef Name="ClassDocumentTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Suppliers_dbo_DocumentTypes_DocumentTypeId">
+    <End Role="DocumentTypes" Type="Self.DocumentTypes" Multiplicity="1" />
+    <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DocumentTypes">
+        <PropertyRef Name="DocumentTypeId" />
+      </Principal>
+      <Dependent Role="Suppliers">
+        <PropertyRef Name="DocumentTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="KingMarketModelStoreContainer">
+    <EntitySet Name="ClassDocumentTypes" EntityType="Self.ClassDocumentTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DocumentTypes" EntityType="Self.DocumentTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_dbo_DocumentTypes_dbo_ClassDocumentTypes_ClassDocumentTypeId" Association="Self.FK_dbo_DocumentTypes_dbo_ClassDocumentTypes_ClassDocumentTypeId">
+      <End Role="ClassDocumentTypes" EntitySet="ClassDocumentTypes" />
+      <End Role="DocumentTypes" EntitySet="DocumentTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Suppliers_dbo_DocumentTypes_DocumentTypeId" Association="Self.FK_dbo_Suppliers_dbo_DocumentTypes_DocumentTypeId">
+      <End Role="DocumentTypes" EntitySet="DocumentTypes" />
+      <End Role="Suppliers" EntitySet="Suppliers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

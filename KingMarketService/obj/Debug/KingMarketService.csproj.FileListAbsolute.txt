@@ -1,0 +1,10 @@
+\\vmware-host\Shared Folders\Desktop\King-Market\KingMarketService\bin\KingMarketService.dll.config
+\\vmware-host\Shared Folders\Desktop\King-Market\KingMarketService\bin\KingMarketService.dll
+\\vmware-host\Shared Folders\Desktop\King-Market\KingMarketService\bin\KingMarketService.pdb
+\\vmware-host\Shared Folders\Desktop\King-Market\KingMarketService\bin\EntityFramework.dll
+\\vmware-host\Shared Folders\Desktop\King-Market\KingMarketService\bin\EntityFramework.SqlServer.dll
+\\vmware-host\Shared Folders\Desktop\King-Market\KingMarketService\bin\EntityFramework.xml
+\\vmware-host\Shared Folders\Desktop\King-Market\KingMarketService\bin\EntityFramework.SqlServer.xml
+\\vmware-host\Shared Folders\Desktop\King-Market\KingMarketService\obj\Debug\KingMarketService.csprojResolveAssemblyReference.cache
+\\vmware-host\Shared Folders\Desktop\King-Market\KingMarketService\obj\Debug\KingMarketService.dll
+\\vmware-host\Shared Folders\Desktop\King-Market\KingMarketService\obj\Debug\KingMarketService.pdb
